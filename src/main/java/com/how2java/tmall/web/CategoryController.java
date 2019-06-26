@@ -83,6 +83,7 @@ public class CategoryController {
             saveOrUpdateImageFile(bean, image, request);
         }
         System.out.println("增加一个输出语句");
+        System.out.println("再增加一个输出语句");
         return bean;
     }
 }
