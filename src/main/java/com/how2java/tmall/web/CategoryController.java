@@ -82,8 +82,8 @@ public class CategoryController {
         if(image!=null) {
             saveOrUpdateImageFile(bean, image, request);
         }
+        System.out.println("增加一个输出语句");
         return bean;
-        //随便改点，测试一些git pull
     }
 }
 
