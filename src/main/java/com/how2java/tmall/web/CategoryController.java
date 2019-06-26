@@ -83,6 +83,7 @@ public class CategoryController {
             saveOrUpdateImageFile(bean, image, request);
         }
         return bean;
+        //随便改点，测试一些git pull
     }
 }
 
