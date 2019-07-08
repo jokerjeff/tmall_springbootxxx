@@ -80,7 +80,7 @@
 <div id="workingArea" >
     <ol class="breadcrumb">
         <li><a href="admin_category_list">所有分类</a></li>
-        <li><a href="'admin_product_list?cid='+category.id">{{category.name}}</a></li>
+        <li><a :href="'admin_product_list?cid='+category.id">{{category.name}}</a></li>
         <li class="active">产品管理</li>
     </ol>
  
@@ -106,7 +106,8 @@
             <tr v-for="bean in beans ">
                 <td>{{bean.id}}</td>
                 <td>
- 
+ 					<img v-if="null != bean.firstProductImage" width="40px" 
+ 						:src="'img/productSingle/'+bean.firstProductImage.id+'.jpg'">
                 </td>
                 <td>{{bean.name}}</td>
                 <td>{{bean.subTitle}}</td>

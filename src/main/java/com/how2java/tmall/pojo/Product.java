@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.springframework.data.elasticsearch.annotations.Document;
 
@@ -37,7 +38,10 @@ public class Product {
     private int stock;
     private Date createDate;
     
-    //getter and setter
+    @Transient
+    private ProductImage firstProductImage;
+    
+	//getter and setter
 	public int getId() {
 		return id;
 	}
@@ -85,5 +89,11 @@ public class Product {
 	}
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
+	}
+	public ProductImage getFirstProductImage() {
+		return firstProductImage;
+	}
+	public void setFirstProductImage(ProductImage firstProductImage) {
+		this.firstProductImage = firstProductImage;
 	}
 }

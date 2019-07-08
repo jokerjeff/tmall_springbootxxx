@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.how2java.tmall.pojo.Product;
 import com.how2java.tmall.pojo.Property;
+import com.how2java.tmall.service.ProductImageService;
 import com.how2java.tmall.service.ProductService;
 import com.how2java.tmall.util.Page4Navigator;
 
@@ -21,6 +22,8 @@ import com.how2java.tmall.util.Page4Navigator;
 public class ProductController {
 	@Autowired
 	private ProductService productService;
+	@Autowired 
+	private ProductImageService productImageService;
 	
 	@PostMapping("/products")
 	public Object add(@RequestBody Product bean) throws Exception{
@@ -52,6 +55,9 @@ public class ProductController {
 			@RequestParam(name="size", defaultValue="5") int size) throws Exception{
 		start = start < 0 ? 0 : start;		
 		Page4Navigator<Product> page =productService.list(cid, start, size,5);
+		
+		productImageService.setFirstProdutImages(page.getContent());
+		
 		return page;
 	}
 }
