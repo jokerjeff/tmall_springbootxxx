@@ -16,6 +16,18 @@ public class UserService {
      
     @Autowired UserDAO userDAO;
  
+    public boolean isExist(String name){
+    	User user = getByName(name);
+    	return null != user;
+    }
+    public User getByName(String name){
+    	return userDAO.findByName(name);
+    }
+    
+    public User get(String name, String password) {
+        return userDAO.getByNameAndPassword(name,password);
+    }
+    
     public Page4Navigator<User> list(int start, int size, int navigatePages) {
         Sort sort = new Sort(Sort.Direction.DESC, "id");
         Pageable pageable = new PageRequest(start, size,sort);
@@ -23,4 +35,7 @@ public class UserService {
         return new Page4Navigator<>(pageFromJPA,navigatePages);
     }
  
+    public void add(User user){
+    	userDAO.save(user);
+    }
 }

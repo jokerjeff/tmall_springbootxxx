@@ -1,6 +1,7 @@
 package com.how2java.tmall.pojo;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -40,6 +41,14 @@ public class Product {
     
     @Transient
     private ProductImage firstProductImage;
+    @Transient
+    private List<ProductImage> productSingleImages;// 单个产品图片集合
+    @Transient
+    private List<ProductImage> productDetailImages;//详情产品图片集合
+    @Transient
+    private int reviewCount;//销量
+    @Transient
+    private int saleCount;//累计评价
     
 	//getter and setter
 	public int getId() {
@@ -96,4 +105,29 @@ public class Product {
 	public void setFirstProductImage(ProductImage firstProductImage) {
 		this.firstProductImage = firstProductImage;
 	}
+	public List<ProductImage> getProductSingleImages() {
+		return productSingleImages;
+	}
+	public void setProductSingleImages(List<ProductImage> productSingleImages) {
+		this.productSingleImages = productSingleImages;
+	}
+	public List<ProductImage> getProductDetailImages() {
+		return productDetailImages;
+	}
+	public void setProductDetailImages(List<ProductImage> productDetailImages) {
+		this.productDetailImages = productDetailImages;
+	}
+	public int getReviewCount() {
+		return reviewCount;
+	}
+	public void setReviewCount(int reviewCount) {
+		this.reviewCount = reviewCount;
+	}
+	public int getSaleCount() {
+		return saleCount;
+	}
+	public void setSaleCount(int saleCount) {
+		this.saleCount = saleCount;
+	}
+	
 }
