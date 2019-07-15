@@ -1,0 +1,37 @@
+<div class th:fragment="html">
+    <script>
+        $(function(){
+            var keyword = getUrlParms("keyword");//通过getUrlParms 拿到keyword参数
+            var data4Vue = {
+                    uri:'foresearch',
+                    products:[]
+            };
+            //ViewModel
+            var vue = new Vue({
+                el: '#workingArea',
+                data: data4Vue,
+                mounted:function(){ //mounted　表示这个 Vue 对象加载成功了
+                    this.load();
+                },       
+                methods: {
+                    load:function(){
+                        var url =  this.uri+"?keyword="+keyword;
+                        axios.post(url).then(function(response) {//然后访问通过 axios.js 访问 foresearch 路径
+                            vue.products = response.data;//获取返回之后 在productsBySearch.html 上显示出来
+                            vue.$nextTick(function(){
+                                linkDefaultActions();
+                            })
+                        });
+                    }
+                }
+            });                
+        })
+    </script>
+ 
+    <div id="searchResult">
+        <div class="searchResultDiv">
+        	<!-- 获取返回之后 在productsBySearch.html 上显示出来 -->
+            <div th:replace="include/fore/productsBySearch::html" ></div>  
+        </div>
+    </div>
+</div>
