@@ -156,4 +156,14 @@ public class ForeRESTController {
      
         return c;
     }
+    
+    @PostMapping("foresearch")
+    public Object search( String keyword){
+        if(null==keyword)
+            keyword = "";
+        List<Product> ps= productService.search(keyword,0,20);//根据keyword进行模糊查询，获取满足条件的前20个产品
+        productImageService.setFirstProdutImages(ps);
+        productService.setSaleAndReviewNumber(ps);//为这些产品设置销量和评价数量
+        return ps;
+    }
 }
