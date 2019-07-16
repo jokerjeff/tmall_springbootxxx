@@ -6,12 +6,14 @@ import com.how2java.tmall.comparator.ProductPriceComparator;
 import com.how2java.tmall.comparator.ProductReviewComparator;
 import com.how2java.tmall.comparator.ProductSaleCountComparator;
 import com.how2java.tmall.pojo.Category;
+import com.how2java.tmall.pojo.OrderItem;
 import com.how2java.tmall.pojo.Product;
 import com.how2java.tmall.pojo.ProductImage;
 import com.how2java.tmall.pojo.PropertyValue;
 import com.how2java.tmall.pojo.Review;
 import com.how2java.tmall.pojo.User;
 import com.how2java.tmall.service.CategoryService;
+import com.how2java.tmall.service.OrderItemService;
 import com.how2java.tmall.service.ProductImageService;
 import com.how2java.tmall.service.ProductService;
 import com.how2java.tmall.service.PropertyValueService;
@@ -27,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.HtmlUtils;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -48,6 +51,8 @@ public class ForeRESTController {
     private PropertyValueService propertyValueService;
     @Autowired
     private ReviewService reviewService;
+    @Autowired
+    private OrderItemService orderItemService;
  
     @GetMapping("/forehome")
     public Object home() {
@@ -165,5 +170,66 @@ public class ForeRESTController {
         productImageService.setFirstProdutImages(ps);
         productService.setSaleAndReviewNumber(ps);//为这些产品设置销量和评价数量
         return ps;
+    }
+    
+    @GetMapping("forebuyone")
+    public Object buyone(int pid, int num, HttpSession session) {
+        return buyoneAndAddCart(pid,num,session);
+    }
+    
+    private int buyoneAndAddCart(int pid, int num, HttpSession session) {
+        Product product = productService.get(pid);
+        int oiid = 0;
+     
+        User user =(User)  session.getAttribute("user");
+        boolean found = false;
+        List<OrderItem> ois = orderItemService.listByUser(user);
+        for (OrderItem oi : ois) {
+            if(oi.getProduct().getId()==product.getId()){
+                oi.setNumber(oi.getNumber()+num);
+                orderItemService.update(oi);
+                found = true;
+                oiid = oi.getId();
+                break;
+            }
+        }
+     
+        if(!found){
+            OrderItem oi = new OrderItem();
+            oi.setUser(user);
+            oi.setProduct(product);
+            oi.setNumber(num);
+            orderItemService.add(oi);
+            oiid = oi.getId();
+        }
+        return oiid;
+    }
+    
+    @GetMapping("forebuy")
+    public Object buy(String[] oiid,HttpSession session){
+        List<OrderItem> orderItems = new ArrayList<>();
+        float total = 0;
+    
+        for (String strid : oiid) {
+            int id = Integer.parseInt(strid);
+            OrderItem oi= orderItemService.get(id);
+            total +=oi.getProduct().getPromotePrice()*oi.getNumber();
+            orderItems.add(oi);
+        }
+    
+        productImageService.setFirstProdutImagesOnOrderItems(orderItems);
+    
+        session.setAttribute("ois", orderItems);
+    
+        Map<String,Object> map = new HashMap<>();
+        map.put("orderItems", orderItems);
+        map.put("total", total);
+        return Result.success(map);
+    }
+    
+    @GetMapping("foreaddCart")
+    public Object addCart(int pid, int num, HttpSession session) {
+        buyoneAndAddCart(pid,num,session);
+        return Result.success();
     }
 }
