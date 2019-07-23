@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 
+//异常处理，主要是在处理删除父类信息的时候，因为外键约束的存在，而导致违反约束。
 @RestController
 @ControllerAdvice
 public class GloabalExceptionHandler {

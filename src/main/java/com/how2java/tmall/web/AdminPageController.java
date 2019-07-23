@@ -3,6 +3,7 @@ package com.how2java.tmall.web;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
  
+//springboot默认访问的是templates中的内容
 @Controller
 public class AdminPageController {
     @GetMapping(value="/admin")
