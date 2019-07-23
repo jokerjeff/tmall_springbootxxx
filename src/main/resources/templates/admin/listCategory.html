@@ -8,7 +8,7 @@
     $(function(){
         var data4Vue = {
             uri:'categories',
-            pagination: {},
+            pagination: {}, //用于分页的
             beans: [],
             bean: {id:0, name:''},
             file:null
@@ -65,6 +65,7 @@
                 deleteBean: function(id){
                 	if(!checkDeleteLink())
                 		return;
+                	//组织url, 删除的规范是 /categoreis/123
                 	var url = this.uri + "/" + id;
                 	axios.delete(url).then(function(response){
                 		if(0 != response.data.length){

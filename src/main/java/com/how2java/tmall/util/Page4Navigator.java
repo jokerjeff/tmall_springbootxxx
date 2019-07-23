@@ -56,32 +56,32 @@ public class Page4Navigator<T> {
         this.pageFromJPA = pageFromJPA;
         this.navigatePages = navigatePages;
           
-        totalPages = pageFromJPA.getTotalPages();
+        totalPages = pageFromJPA.getTotalPages();//总页面数
           
-        number  = pageFromJPA.getNumber() ;
+        number  = pageFromJPA.getNumber() ;//第几页（基0）
           
-        totalElements = pageFromJPA.getTotalElements();
+        totalElements = pageFromJPA.getTotalElements();//总共有多少条数据
           
-        size = pageFromJPA.getSize();
+        size = pageFromJPA.getSize();//一页最多有多少条数据
           
-        numberOfElements = pageFromJPA.getNumberOfElements();
+        numberOfElements = pageFromJPA.getNumberOfElements();//当前页有多少条数据 (与 size，不同的是，最后一页可能不满 size 个)
           
-        content = pageFromJPA.getContent();
+        content = pageFromJPA.getContent();//数据集合
           
-        isHasContent = pageFromJPA.hasContent();
+        isHasContent = pageFromJPA.hasContent();//是否有数据
                   
-        first = pageFromJPA.isFirst();
+        first = pageFromJPA.isFirst();//是否是首页
           
-        last = pageFromJPA.isLast();
+        last = pageFromJPA.isLast();//是否是末页
           
-        isHasNext = pageFromJPA.hasNext();
+        isHasNext = pageFromJPA.hasNext();//是否有下一页
           
-        isHasPrevious  = pageFromJPA.hasPrevious();      
+        isHasPrevious  = pageFromJPA.hasPrevious();//是否有上一页      
           
         calcNavigatepageNums();
           
     }
-  
+    //因分页栏会变化，如[8,9,10,11,12]-->[7,8,9,10,11]
     private void calcNavigatepageNums() {
         int navigatepageNums[];
         int totalPages = getTotalPages();

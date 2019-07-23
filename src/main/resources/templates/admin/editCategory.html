@@ -23,6 +23,7 @@
             methods: {
                 get:function(){
                     var id = getUrlParms("id");
+                    //组织url 成为 /categories/13 这种形式
                     var url = this.uri+"/"+id;
                     axios.get(url).then(function(response) {
                         vue.bean = response.data;
@@ -31,6 +32,8 @@
                 update:function () {
                     if(!checkEmpty(this.bean.name, "分类名称"))
                         return;
+                    //不判断是否有选择上传图片。 因为在逻辑上是如果选择了上传图片，就更新图片，如果没有选择，就保留原图片不变。
+                    
                     var url = this.uri+"/"+this.bean.id;
  
                     //axios.js 上传文件要用 formData 这种方式

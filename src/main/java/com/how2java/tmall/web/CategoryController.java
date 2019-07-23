@@ -38,16 +38,17 @@ public class CategoryController {
 	
 	@PostMapping("/categories")//增加
 	public Object add(Category bean, MultipartFile image, HttpServletRequest request) throws IOException{
-		categoryService.add(bean);
-		saveOrUpdateImageFile(bean, image, request);
+		//MultipartFile  这个类一般是用来接受前台传过来的文件
+		categoryService.add(bean);//1、保存至数据库中。但这里为什么能直接读取一个bean，传参传的是bean.name?
+		saveOrUpdateImageFile(bean, image, request);//2、在本地项目中为该分类设置图片
 //		System.out.println("bean in controller return : " + bean);
 		return bean;
 	}
 	
 	public void saveOrUpdateImageFile(Category bean, MultipartFile image, HttpServletRequest request) 
 			throws IOException{
-		File imageFolder= new File(request.getServletContext().getRealPath("img/category"));
-        File file = new File(imageFolder,bean.getId()+".jpg");
+		File imageFolder= new File(request.getServletContext().getRealPath("img/category"));//分类文件夹
+        File file = new File(imageFolder,bean.getId()+".jpg");//在分类文件夹下通过bean.id设置图片名称
         if(!file.getParentFile().exists())
             file.getParentFile().mkdirs();
         image.transferTo(file);
@@ -58,10 +59,11 @@ public class CategoryController {
 	
 	@DeleteMapping("/categories/{id}")//删除
 	public String delete(@PathVariable("id") int id, HttpServletRequest request){
-		categoryService.delete(id);
+		categoryService.delete(id);//删除数据库中的数据
 		File imageFolder = new File(request.getServletContext().getRealPath("image/category"));
-		File file = new File(imageFolder, id + ".jpg");
-		file.delete();
+		File file = new File(imageFolder, id + ".jpg");//根据id获取分类图片
+		file.delete();//删除分类图片
+		//返回 null, 会被RESTController 转换为空字符串。
 		return null;
 	}
 	
@@ -75,6 +77,7 @@ public class CategoryController {
     public Object update(Category bean, MultipartFile image,HttpServletRequest request) throws Exception {
         //这里获取参数用的是 request.getParameter("name"). 为什么不用 add里的注入一个 Category对象呢？ 
 		//因为。。。PUT 方式注入不了。。。 只能用这种方式取参数了
+		//经测试，直接用getter获取属性，bean.name=null,bean.id有值
 		String name = request.getParameter("name");
         bean.setName(name);
         categoryService.update(bean);
