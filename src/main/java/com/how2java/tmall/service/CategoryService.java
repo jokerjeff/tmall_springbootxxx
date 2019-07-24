@@ -17,7 +17,7 @@ import com.how2java.tmall.util.Page4Navigator;
 @Service
 public class CategoryService {
 	@Autowired CategoryDAO categoryDAO;
-
+	//后台
 	public Page4Navigator<Category> list(int start, int size, int navigatePages){
 		//start:起始页
 		Sort sort = new Sort(Sort.Direction.DESC, "id");
@@ -52,7 +52,7 @@ public class CategoryService {
 		categoryDAO.save(bean);
 	}
 	
-	//----------------------------------//
+	//----------------前台？------------------//
 	public void removeCategoryFromProduct(List<Category> cs){
 		for(Category category : cs){
 			removeCategoryFromProduct(category);

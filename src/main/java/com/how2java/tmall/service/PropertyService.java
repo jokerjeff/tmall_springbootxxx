@@ -37,6 +37,8 @@ public class PropertyService {
 		return propertyDao.findOne(id);
 	}
 	
+	//因为在业务上需要查询某个分类下的属性，所以list方法会带上对应分类的id。  start:起始页;size:每页显示的最多个数
+	//后台
 	public Page4Navigator<Property> list(int cid, int start, int size, int navigatePages){
 		Category category = categoryService.get(cid);
 		

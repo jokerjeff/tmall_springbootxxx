@@ -39,6 +39,7 @@ public class PropertyController {
     }
      
     @PutMapping("/properties")
+    //@RequestBody:这是因为 Property 这里不需要上传，所以就可以这么写，但是要上传这样写就不行了。
     public Object update(@RequestBody Property bean) throws Exception {
         propertyService.update(bean);
         return bean;
