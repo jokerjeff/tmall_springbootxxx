@@ -31,8 +31,10 @@ public class ProductImageController {
 	@Autowired
 	private ProductService productService;
 	
+	/*问：@RequestParam是否多余呢，因为默认就会从url中匹配参数。答：是的，如果参数名称和parameter名称一样，就可以不用写*/
 	@GetMapping("/products/{pid}/productImages")
-	public List<ProductImage> list(@RequestParam("type") String type, @PathVariable("pid") int pid) throws Exception{
+	public List<ProductImage> list(@RequestParam("type") String type, @PathVariable("pid") int pid) 
+			throws Exception{
 		Product product = productService.get(pid);
 		if(ProductImageService.type_single.equals(type)){
 			List<ProductImage> singles = productImageService.listSingleProductImages(product);

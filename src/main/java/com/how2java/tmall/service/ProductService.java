@@ -21,6 +21,7 @@ public class ProductService {
 	private ProductDAO productDAO;
 	@Autowired
 	private CategoryService categoryService;
+	
 	@Autowired 
 	private ProductImageService productImageService;
 	@Autowired 

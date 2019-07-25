@@ -39,6 +39,7 @@ public class Product {
     private int stock;
     private Date createDate;
     
+    //----与数据库字段无关的变量----//
     @Transient
     private ProductImage firstProductImage;
     @Transient

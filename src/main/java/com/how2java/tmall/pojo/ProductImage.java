@@ -24,10 +24,13 @@ public class ProductImage {
 	@ManyToOne
 	@JoinColumn(name = "pid")
 	@JsonBackReference
+	/*所谓的双向关联就是，产品里有分类，分类里有产品，产品里又有分类，分类里又有产品，无限循环了。
+	@JsonBackReference 这个仅仅表示对象转换成 json 数据的时候忽略了，但并不是所有时间都忽略了，平时还要用啊*/
 	private Product product;
 
 	private String type;
 
+	//---getter and setter---//
 	public int getId() {
 		return id;
 	}
